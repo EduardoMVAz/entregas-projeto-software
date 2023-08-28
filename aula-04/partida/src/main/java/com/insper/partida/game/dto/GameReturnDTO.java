@@ -18,8 +18,8 @@ public class GameReturnDTO {
     private LocalDateTime gameDate;
     private String status;
 
-    private String home;
-    private String away;
+    private TeamReturnDTO home;
+    private TeamReturnDTO away;
 
     public static GameReturnDTO covert(Game game) {
         GameReturnDTO gameReturnDTO = new GameReturnDTO();
@@ -29,8 +29,8 @@ public class GameReturnDTO {
         gameReturnDTO.setStatus(game.getStatus());
         gameReturnDTO.setScoreAway(game.getScoreAway());
         gameReturnDTO.setScoreHome(game.getScoreHome());
-        gameReturnDTO.setHome(game.getHome());
-        gameReturnDTO.setAway(game.getAway());
+        gameReturnDTO.setHome(TeamReturnDTO.covert(game.getHome()));
+        gameReturnDTO.setAway(TeamReturnDTO.covert(game.getAway()));
         return gameReturnDTO;
     }
 
