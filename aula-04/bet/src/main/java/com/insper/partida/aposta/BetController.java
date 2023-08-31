@@ -23,8 +23,8 @@ public class BetController {
     }
 
     @PutMapping("/{betId}/verify")
-    public Bet verifyBet(@PathVariable Integer betId) {
-        return betService.verifyBet(betId);
+    public Bet verifyBet(@PathVariable String betId) {
+        return null;
     }
 
     @GetMapping("/{gameId}/game")

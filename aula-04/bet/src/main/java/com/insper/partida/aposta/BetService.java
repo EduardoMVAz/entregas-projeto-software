@@ -3,9 +3,7 @@ package com.insper.partida.aposta;
 import com.insper.partida.game.GameReturnDTO;
 import com.insper.partida.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class BetService {
     }
 
     public List<Bet> listBets() {
-        return null;
+        return betRespository.findAll();
     }
 
     public Bet verifyBet(Integer betId) {
