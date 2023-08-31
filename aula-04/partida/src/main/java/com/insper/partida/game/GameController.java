@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/game")
@@ -46,9 +45,14 @@ public class GameController {
         gameService.deleteGame(identifier);
     }
 
-    @GetMapping("/{id}/score")
-    public Integer getScoreTeam(@PathVariable String id) {
-        return gameService.getScoreTeam(id);
+    @GetMapping("/{id}/score/away")
+    public Integer getScoreAway(@PathVariable String id) {
+        return gameService.getScoreAwayTeam(id);
+    }
+
+    @GetMapping("/{id}/score/home")
+    public Integer getScoreHomeTeam(@PathVariable String id) {
+        return gameService.getScoreHomeTeam(id);
     }
 
 }

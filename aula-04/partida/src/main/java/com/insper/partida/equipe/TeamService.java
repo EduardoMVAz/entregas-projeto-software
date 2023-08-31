@@ -38,6 +38,10 @@ public class  TeamService {
 
     }
 
+    public String getTeamName(String identifier) {
+        return teamRepository.findByIdentifier(identifier).getName();
+    }
+
     public Team getTeam(String identifier) {
         return teamRepository.findByIdentifier(identifier);
     }

@@ -1,8 +1,6 @@
 package com.insper.partida.game;
 
-import com.insper.partida.equipe.Team;
 import com.insper.partida.equipe.TeamService;
-import com.insper.partida.equipe.dto.TeamReturnDTO;
 import com.insper.partida.game.dto.EditGameDTO;
 import com.insper.partida.game.dto.GameReturnDTO;
 import com.insper.partida.game.dto.SaveGameDTO;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,8 +24,8 @@ public class GameService {
     public Page<GameReturnDTO> listGames(String home, String away, Integer attendance, Pageable pageable) {
         if (home != null && away != null) {
 
-            Team tHome = teamService.getTeam(home);
-            Team tAway = teamService.getTeam(away);
+            String tHome = teamService.getTeamName(home);
+            String tAway = teamService.getTeamName(away);
 
             Page<Game> games = gameRepository.findByHomeAndAway(tHome, tAway, pageable);
             return games.map(game -> GameReturnDTO.covert(game));
@@ -43,8 +40,8 @@ public class GameService {
 
     public GameReturnDTO saveGame(SaveGameDTO saveGameDTO) {
 
-        Team teamM = teamService.getTeam(saveGameDTO.getHome());
-        Team teamV = teamService.getTeam(saveGameDTO.getAway());
+        String teamM = teamService.getTeamName(saveGameDTO.getHome());
+        String teamV = teamService.getTeamName(saveGameDTO.getAway());
 
         if (teamM == null || teamV == null) {
             return null;
@@ -84,10 +81,16 @@ public class GameService {
         }
     }
 
-    public Integer getScoreTeam(String identifier) {
-        Team team = teamService.getTeam(identifier);
+    public Integer getScoreAwayTeam(String identifier) {
+        Game game = gameRepository.findByIdentifier(identifier);
 
-        return 0;
+        return game.getScoreAway();
+    }
+
+    public Integer getScoreHomeTeam(String identifier) {
+        Game game = gameRepository.findByIdentifier(identifier);
+
+        return game.getScoreHome();
     }
 
     public GameReturnDTO getGame(String identifier) {

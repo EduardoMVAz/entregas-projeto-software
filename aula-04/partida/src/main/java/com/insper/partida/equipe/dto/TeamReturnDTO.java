@@ -10,10 +10,10 @@ public class TeamReturnDTO {
     private String identifier;
     private String name;
 
-    public static TeamReturnDTO covert(Team game) {
+    public static TeamReturnDTO covert(Team team) {
         TeamReturnDTO teamReturnDTO = new TeamReturnDTO();
-        teamReturnDTO.setIdentifier(game.getIdentifier());
-        teamReturnDTO.setName(game.getName());
+        teamReturnDTO.setIdentifier(team.getIdentifier());
+        teamReturnDTO.setName(team.getName());
         return teamReturnDTO;
     }
 }
