@@ -10,3 +10,5 @@ Algumas mudanças no código inicial foram realizadas. Nenhuma prejudica o funci
 
 ## Entrega 2
 A entrega 2 está na pasta "entrega2".
+
+As rotas postman usadas para teste foram desenvolvidas em sala, generateData e get tabelas.
