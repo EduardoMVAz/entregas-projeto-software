@@ -26,18 +26,21 @@ public class  TeamService {
     }
 
     public TeamReturnDTO saveTeam(SaveTeamDTO saveTeam) {
-        Team team = new Team();
-        team.setName(saveTeam.getName());
-        team.setIdentifier(saveTeam.getIdentifier());
+        if (!teamRepository.existsByIdentifier(saveTeam.getIdentifier())) {
+            Team team = new Team();
+            team.setName(saveTeam.getName());
+            team.setIdentifier(saveTeam.getIdentifier());
 
-        // cria a tabela aqui
-        Tabela tabela = new Tabela();
-        tabela.setTime(team.getIdentifier());
-        tabelaRepository.save(tabela);
+            // cria a tabela aqui
+            Tabela tabela = new Tabela();
+            tabela.setTime(team.getIdentifier());
+            tabelaRepository.save(tabela);
 
-        
-        team = teamRepository.save(team);
-        return  TeamReturnDTO.covert(team);
+            
+            team = teamRepository.save(team);
+            return  TeamReturnDTO.covert(team);
+        }
+        return null;
     }
 
 

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TabelaRepository extends MongoRepository<Tabela, String>{
-    
+
     Tabela findByTime(String identifier);
     
 }

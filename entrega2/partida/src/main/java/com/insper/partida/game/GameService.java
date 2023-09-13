@@ -86,8 +86,8 @@ public class GameService {
         // Atualiza Tabelas
 
         // Tabela do time da casa
-        Team timeAway = teamService.getTeam(gameBD.getAway());
-        Tabela tabelaAway = tabelaService.getTabela(timeAway.getIdentifier());
+        String timeAway = gameBD.getAway();
+        Tabela tabelaAway = tabelaService.getTabela(timeAway);
 
         tabelaAway.setPontos(tabelaAway.getPontos() + verificaResultado(timeAway, game));
         tabelaAway.setVitorias(tabelaAway.getVitorias() + (verificaVitorias(timeAway, game) ? 1 : 0));
@@ -99,8 +99,8 @@ public class GameService {
         tabelaService.saveTabela(tabelaAway);
 
         // Tabela do time de fora
-        Team timeHome = teamService.getTeam(game.getHome());
-        Tabela tabelaHome = tabelaService.getTabela(timeHome.getIdentifier());
+        String timeHome = game.getHome();
+        Tabela tabelaHome = tabelaService.getTabela(timeHome);
 
         tabelaHome.setPontos(tabelaHome.getPontos() + verificaResultado(timeHome, game));
         tabelaHome.setVitorias(tabelaHome.getVitorias() + (verificaVitorias(timeHome, game) ? 1 : 0));
@@ -168,7 +168,6 @@ public class GameService {
             editGameDTO.setScoreAway(new Random().nextInt(4));
             editGameDTO.setAttendance(new Random().nextInt(4) * 1000);
             editGame(game.getIdentifier(), editGameDTO);
-
         }
     }
 
@@ -176,54 +175,54 @@ public class GameService {
         return gameRepository.findByHomeOrAway(identifier, identifier);
     }
 
-    private Integer verificaResultado(Team time, Game game) {
+    private Integer verificaResultado(String time, Game game) {
         if (game.getScoreHome() == game.getScoreAway()) {
             return 1;
         }
-        if (game.getHome().equals(time.getIdentifier()) && game.getScoreHome() > game.getScoreAway()) {
+        if (game.getHome().equals(time) && game.getScoreHome() > game.getScoreAway()) {
             return 3;
         }
-        if (game.getAway().equals(time.getIdentifier()) && game.getScoreAway() > game.getScoreHome()) {
+        if (game.getAway().equals(time) && game.getScoreAway() > game.getScoreHome()) {
             return 3;
         }
         return 0;
     }
 
-    private Integer verificaGolsPro(Team time, Game game) {
-        if (game.getHome().equals(time.getIdentifier())) {
+    private Integer verificaGolsPro(String time, Game game) {
+        if (game.getHome().equals(time)) {
             return game.getScoreHome();
         }
         return game.getScoreAway();
     }
 
-    private Integer verificaGolsContra(Team time, Game game) {
-        if (game.getHome().equals(time.getIdentifier())) {
+    private Integer verificaGolsContra(String time, Game game) {
+        if (game.getHome().equals(time)) {
             return game.getScoreAway();
         }
         return game.getScoreHome();
     }
 
-    private boolean verificaVitorias(Team time, Game game) {
-        if (game.getHome().equals(time.getIdentifier()) && game.getScoreHome() > game.getScoreAway()) {
+    private boolean verificaVitorias(String time, Game game) {
+        if (game.getHome().equals(time) && game.getScoreHome() > game.getScoreAway()) {
             return true;
         }
-        if (game.getAway().equals(time.getIdentifier()) && game.getScoreAway() > game.getScoreHome()) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean verificaDerrotas(Team time, Game game) {
-        if (game.getHome().equals(time.getIdentifier()) && game.getScoreHome() < game.getScoreAway()) {
-            return true;
-        }
-        if (game.getAway().equals(time.getIdentifier()) && game.getScoreAway() < game.getScoreHome()) {
+        if (game.getAway().equals(time) && game.getScoreAway() > game.getScoreHome()) {
             return true;
         }
         return false;
     }
 
-    private boolean verificaEmpates(Team time, Game game) {
+    private boolean verificaDerrotas(String time, Game game) {
+        if (game.getHome().equals(time) && game.getScoreHome() < game.getScoreAway()) {
+            return true;
+        }
+        if (game.getAway().equals(time) && game.getScoreAway() < game.getScoreHome()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean verificaEmpates(String time, Game game) {
         if (game.getScoreHome() == game.getScoreAway()) {
             return true;
         }
